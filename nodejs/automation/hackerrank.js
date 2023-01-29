@@ -49,6 +49,10 @@ async function hk() {
         await page.keyboard.press('Backspace');
         await page.keyboard.press('V');
 
+        // click submit button
+        await page.waitForSelector('button.ui-btn-primary');
+        await page.click('button.ui-btn-primary');
+
 
         
     } catch (error) {
