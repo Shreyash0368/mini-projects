@@ -1,0 +1,159 @@
+/* CSS for entire doc */
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+
+}
+
+.round-border {
+    border-radius: 2px;
+    ;
+}
+
+.lightpink {
+    background-color: lightpink;
+}
+
+.lightgreen {
+    background-color: lightgreen;
+}
+
+.lightblue {
+    background-color: lightblue;
+}
+
+.black {
+    background-color: black;
+}
+
+
+/* CSS for nav bar */
+.navBar {
+    display: flex;
+    align-items: center;
+    height: 6rem;
+    background-color: #1e272e;
+}
+
+.navBar>* {
+    margin-left: 4rem;
+    border-radius: 2px;
+}
+
+.colorPallete {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 3rem;
+    width: 16rem;
+    background-color: #485460;
+}
+
+.tools {
+    display: flex;        
+    height: 4rem;
+    width: 8rem;
+    background-color: #2f3542;
+}
+
+.color {
+    height: 2rem;
+    width: 3rem;
+    border-radius: 2px;
+}
+
+.tools>* {
+    font-size: 2rem;
+    color: aliceblue;
+}
+
+.add,
+.remove {
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.add:hover, .remove:hover {
+    background-color: #6a89cc;
+}
+
+/* CSS for the notes */
+
+.note-container {
+    padding: 1rem;
+    display: flex;    
+    justify-content: space-around;        
+}
+
+.note {
+    box-sizing: border-box;     
+    height: 17rem;
+    width: 15rem;  
+    
+}
+
+.note-color {
+    height: 10%;
+    width: 100%;
+}
+
+.note-ID {
+    height: 10%;
+    width: 100%;
+    background-color: #ecf0f1;
+    /* text-align: center; */
+    padding: 0.5rem;
+}
+
+.note-text {
+    height: 80%;
+    width: 100%;
+    background-color: #ecf0f1;
+    padding: 0.5rem;
+}
+
+
+
+/* CSS for note creator */
+.note-creator {
+    display: none;    
+    position: absolute;
+    height: 50vh;
+    width: 50vw;    
+    top: calc((100vh - 50vh)/2);
+    left: calc((100vw - 50vw)/2);    
+}
+
+.textarea-cont {
+    height: 100%;
+    width: 75%;
+    resize: none;
+    outline: none;
+    border: none;
+    background-color: #d2dae2;
+    font-size: 1.5rem;
+    padding: 2rem;
+    
+}
+
+
+
+.color-pallete {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+    width: 25%;
+    background-color: #485460;
+}
+
+.color-pick {
+    width: 80%;
+    height: 12%;
+}
