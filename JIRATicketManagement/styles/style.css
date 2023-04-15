@@ -57,9 +57,9 @@
     background-color: #2f3542;
 }
 
-.color {
-    height: 2rem;
-    width: 3rem;
+.colorChoice {
+    height: 60%;
+    width: 20%;
     border-radius: 2px;
 }
 
