@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel-clone</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<body>
+    <!--Nav bar-->
+    <div class="nav-bar">
+        <div class="resource-bar">
+            <div>File</div>
+            <div>Home</div>
+            <div>Insert</div>
+            <div>Layout</div>
+            <div>Help</div>
+        </div>
+
+        <div class="icon-bar">            
+            <span class="material-icons">
+                file_copy
+            </span>
+            <span class="material-icons">
+                content_cut
+            </span>
+            <span class="material-icons">
+                content_paste
+            </span>
+
+            <select name="font-family" id="font-family">
+                <option value="Sans-serif">Sans-serif</option>
+                <option value="Arial">Arial</option>
+                <option value="Copperplate">Copperplate</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Serif">Serif</option>
+            </select>
+
+            <select name="font-size" id="font-size">
+                <option value="12">12</option>
+                <option value="14">14</option>
+                <option value="16">16</option>
+                <option value="18">18</option>
+                <option value="20">20</option>
+            </select>
+
+            <span class="material-icons">
+                format_bold
+            </span>
+            <span class="material-icons">
+                format_italic
+            </span>
+            <span class="material-icons">
+                format_underline
+            </span>
+            <span class="material-icons">
+                format_align_left
+            </span>
+            <span class="material-icons">
+                format_align_right
+            </span>
+            <span class="material-icons">
+                format_align_justify
+            </span>
+        </div>
+
+        <div class="formula-bar">
+            <input type="text" class="address-input" spellcheck="false">            
+            <img src="https://cdn.pixabay.com/photo/2012/04/11/00/10/math-27248_1280.png" alt="">
+            <input type="text" class="formula-input" spellcheck="false">
+        </div>
+    </div>
+
+    <!-- grid cells container -->
+    <div class="grid-container">
+    </div>
+
+    <!-- File toggle -->
+    <div class="sheets-bar">
+        <span class="material-icons">
+            post_add
+        </span>
+
+        <div class="sheet-folder">
+            <div>sheet-1</div>
+        </div>
+    </div>
+</body>
+
+</html>
