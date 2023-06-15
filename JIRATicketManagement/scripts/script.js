@@ -21,7 +21,7 @@ let noteArray = [];
 // //? loading old notes from local storage
 if (localStorage.getItem('jiraTicket')) {
     noteArray = JSON.parse(localStorage.getItem('jiraTicket'));   
-    noteArray.forEach((note,idx) => {
+    noteArray.forEach((note) => {
         ticketCreator(note.color, note.text, note.ID.substring(1,7), false);
     })    
 }
