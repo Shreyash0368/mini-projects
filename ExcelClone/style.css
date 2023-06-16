@@ -58,7 +58,7 @@
 }
     
 
-.address-input {
+.address-display {
     width: 3rem;
     background-color: white;
     height: 70%;
@@ -66,6 +66,9 @@
     border: none;
     padding: 0.5rem;
     border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     
 }
 
@@ -87,9 +90,79 @@
 
 
 /* Grid container */
-.grid-container {
+.content-container {
     height: calc(100vh - 9rem);
+    position: relative;    
+    overflow: scroll;    
+    background-color: #ececec;    
 }
+
+.dummy-box {
+    width: 2rem;
+    height: 2rem;
+    background-color: #5c5470;
+    position: sticky;   
+    top: 0;
+    left: 0; 
+    border: 1px solid #dbd8e3;
+    z-index: 4;
+}
+
+.address-col {
+    position: sticky;    
+    top: 2rem;
+    left: 0rem;
+}
+
+.address-row {
+    position: sticky;
+    top: 0rem;
+    left: 2rem;       
+    display: flex;    
+}
+
+.col-index {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid #dbd8e3;
+}
+
+.row-index {
+    width: 5rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #dbd8e3;
+}
+
+.cell-container {   
+   position: absolute;
+   top: 0rem;
+   left: 2rem;
+   z-index: 0;
+}
+
+.row-cont {
+    display: flex;
+}
+
+.cell {
+    height: 2rem;
+    width: 5rem;
+    border: 1px solid #dbd8e3;
+    
+}
+
+
+
+
+
+
+
 
 /* sheet tab */
 .sheets-bar {
