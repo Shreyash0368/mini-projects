@@ -5,6 +5,7 @@ let col = 26;
 let addressCol = document.querySelector(".address-col"); 
 let addressRow = document.querySelector(".address-row"); 
 let cellCont = document.querySelector(".cell-container");
+let addressDisplay = document.querySelector(".address-display");        
 
 // adding row no
 for (let i = 0; i < row; i++) {
@@ -30,6 +31,9 @@ for (let i = 0; i < row; i++) {
         let cell = document.createElement("div");
         cell.setAttribute("class", "cell");
         cell.setAttribute("contenteditable", "true")
+        cell.setAttribute("row-id", `${i}`);
+        cell.setAttribute("col-id", `${j}`);
+        cell.setAttribute("spellcheck", "false");
         displayAddress(cell, i, j);
         
         rowCont.appendChild(cell);    
@@ -39,7 +43,6 @@ for (let i = 0; i < row; i++) {
 
 function displayAddress(cell, i, j) {
     cell.addEventListener('click', (e) => {
-        let addressDisplay = document.querySelector(".address-display");        
-        addressDisplay.innerText = `${String.fromCharCode(65 + j)}${i + 1}`;
+        addressDisplay.value = `${String.fromCharCode(65 + j)}${i + 1}`;   
     })
 }

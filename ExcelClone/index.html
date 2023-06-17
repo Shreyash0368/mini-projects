@@ -36,42 +36,51 @@
 
             <select name="font-family" id="font-family">
                 <option value="Sans-serif">Sans-serif</option>
-                <option value="Arial">Arial</option>
-                <option value="Copperplate">Copperplate</option>
+                <option value="fantasy">fantasy</option>
+                <option value="cursive">cursive</option>
                 <option value="Times New Roman">Times New Roman</option>
-                <option value="Serif">Serif</option>
+                <option value="monospace">Monospace</option>
             </select>
 
             <select name="font-size" id="font-size">
                 <option value="12">12</option>
                 <option value="14">14</option>
-                <option value="16">16</option>
+                <option value="16" selected>16</option>
                 <option value="18">18</option>
                 <option value="20">20</option>
+                <option value="22">22</option>
+                <option value="24">24</option>
+                <option value="26">26</option>
             </select>
 
-            <span class="material-icons">
+            <span class="material-icons bold">
                 format_bold
             </span>
-            <span class="material-icons">
+            <span class="material-icons italic">
                 format_italic
             </span>
-            <span class="material-icons">
+            <span class="material-icons underline">
                 format_underline
             </span>
-            <span class="material-icons">
+            <span class="material-icons align-left">
                 format_align_left
             </span>
-            <span class="material-icons">
+            <span class="material-icons align-right">
                 format_align_right
             </span>
-            <span class="material-icons">
-                format_align_justify
+            <span class="material-icons align-center">
+                format_align_center
+            </span>
+            <span class="material-icons text-color">
+                format_color_text
+            </span>
+            <span class="material-icons bg-color">
+                format_color_fill
             </span>
         </div>
 
         <div class="formula-bar">
-            <div class="address-display"> </div>           
+            <input type="text" class="address-display" readonly> 
             <img src="https://cdn.pixabay.com/photo/2012/04/11/00/10/math-27248_1280.png" alt="">
             <input type="text" class="formula-input" spellcheck="false">
         </div>
@@ -99,7 +108,8 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
+    <script src="./cell-property.js"></script>
 </body>
 
 </html>
