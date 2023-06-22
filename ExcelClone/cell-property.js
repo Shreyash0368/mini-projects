@@ -4,6 +4,7 @@ let sheetDB = [];
 for (let i = 0; i < row; i++) {
     let cellRow = [];
     for (let i = 0; i < col; i++) {
+        // default values of all cells
         let cellObj = {
             bold : false,
             italic : false,
@@ -11,7 +12,7 @@ for (let i = 0; i < row; i++) {
             fontFamily : "Sans-serif",
             fontSize : 16,
             fontColor : "#000000",
-            backgroundColor : "transparent",
+            backgroundColor : "#ececec",
             alignment : "left"
         }
         cellRow.push(cellObj);        
@@ -28,13 +29,45 @@ let underlineProp = document.querySelector(".underline");
 let alignLeftProp = document.querySelector(".align-left");
 let alignRightProp = document.querySelector(".align-right");
 let alignCenterProp = document.querySelector(".align-center");
-let textColorProp = document.querySelector(".text-color");
-let bgColorProp = document.querySelector(".bg-color");
+let fontColorProp = document.querySelector("input.text-color");
+let bgColorProp = document.querySelector("input.bg-color");
 
 // cell Prop colors
 let inActiveColor = "#ececec";
 let activeColor = "#dbd8e3" 
 
+
+fontSizeProp.addEventListener("change", (e) => {
+    let address = addressDisplay.value;
+    let [rowIdx, colIdx] = decodeAddress(address);
+    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"] `)
+    let cellProp = sheetDB[rowIdx][colIdx];
+    
+    // changing the data in sheet 
+    cellProp.fontSize = fontSizeProp.value;
+
+    // modifying text in cell
+    cell.style.fontSize = cellProp.fontSize + "px";
+    
+    // changing the select value in UI 
+    fontSizeProp.value = cellProp.fontSize
+})
+
+fontFamilyProp.addEventListener("change", (e) => {
+    let address = addressDisplay.value;
+    let [rowIdx, colIdx] = decodeAddress(address);
+    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"]`);
+    let cellProp = sheetDB[rowIdx][colIdx];
+    
+    // changing the data in sheet 
+    cellProp.fontFamily = fontFamilyProp.value;
+
+    // modifying text in cell
+    cell.style.fontFamily = cellProp.fontFamily;
+    
+    // changing the boldprop button 
+    fontFamilyProp.value = cellProp.fontFamily;
+})
 
 boldProp.addEventListener("click", (e) => {
     let address = addressDisplay.value;
@@ -84,45 +117,97 @@ underlineProp.addEventListener("click", (e) => {
     underlineProp.style.backgroundColor = (cellProp.underline ? activeColor : inActiveColor);
 })
 
-fontSizeProp.addEventListener("change", (e) => {
+alignLeftProp.addEventListener("click", (e) => {
     let address = addressDisplay.value;
     let [rowIdx, colIdx] = decodeAddress(address);
     let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"] `)
     let cellProp = sheetDB[rowIdx][colIdx];
     
     // changing the data in sheet 
-    cellProp.fontSize = fontSizeProp.value;
+    cellProp.alignment = "left";
 
     // modifying text in cell
-    cell.style.fontSize = cellProp.fontSize + "px";
+    cell.style.textAlign = "left";
     
-    // changing the select value in UI 
-    fontSizeProp.value = cellProp.fontSize
+    // changing the boldprop button 
+    alignCenterProp.style.backgroundColor = (cellProp.alignment === "center" ? activeColor : inActiveColor);
+    alignLeftProp.style.backgroundColor = (cellProp.alignment === "left" ? activeColor : inActiveColor);
+    alignRightProp.style.backgroundColor = (cellProp.alignment === "right" ? activeColor : inActiveColor);
 })
 
-fontFamilyProp.addEventListener("click", (e) => {
+alignRightProp.addEventListener("click", (e) => {
+    let address = addressDisplay.value;
+    let [rowIdx, colIdx] = decodeAddress(address);
+    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"] `)
+    let cellProp = sheetDB[rowIdx][colIdx];
+    
+    // changing the data in sheet 
+    cellProp.alignment = "right";
+
+    // modifying text in cell
+    cell.style.textAlign = "right";
+    
+    // changing the boldprop button 
+    alignCenterProp.style.backgroundColor = (cellProp.alignment === "center" ? activeColor : inActiveColor);
+    alignLeftProp.style.backgroundColor = (cellProp.alignment === "left" ? activeColor : inActiveColor);
+    alignRightProp.style.backgroundColor = (cellProp.alignment === "right" ? activeColor : inActiveColor);
+})
+
+alignCenterProp.addEventListener("click", (e) => {
+    let address = addressDisplay.value;
+    let [rowIdx, colIdx] = decodeAddress(address);
+    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"] `)
+    let cellProp = sheetDB[rowIdx][colIdx];
+    
+    // changing the data in sheet 
+    cellProp.alignment = "center";
+
+    // modifying text in cell
+    cell.style.textAlign = "center";
+    
+    // changing the boldprop button 
+    alignCenterProp.style.backgroundColor = (cellProp.alignment === "center" ? activeColor : inActiveColor);
+    alignLeftProp.style.backgroundColor = (cellProp.alignment === "left" ? activeColor : inActiveColor);
+    alignRightProp.style.backgroundColor = (cellProp.alignment === "right" ? activeColor : inActiveColor);
+})
+
+
+fontColorProp.addEventListener("change", (e) => {
     let address = addressDisplay.value;
     let [rowIdx, colIdx] = decodeAddress(address);
     let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"]`);
     let cellProp = sheetDB[rowIdx][colIdx];
     
     // changing the data in sheet 
-    cellProp.fontFamily = fontFamilyProp.value;
+    cellProp.fontColor = fontColorProp.value;
 
     // modifying text in cell
-    cell.style.fontFamily = cellProp.fontFamily;
+    cell.style.color = cellProp.fontColor;
     
     // changing the boldprop button 
-    fontFamilyProp.value = cellProp.fontFamily;
+    fontColorProp.value = cellProp.fontColor;
+})
+
+bgColorProp.addEventListener("change", (e) => {
+    let address = addressDisplay.value;
+    let [rowIdx, colIdx] = decodeAddress(address);
+    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"]`);
+    let cellProp = sheetDB[rowIdx][colIdx];
+    
+    // changing the data in sheet 
+    cellProp.backgroundColor = bgColorProp.value;
+
+    // modifying text in cell
+    cell.style.backgroundColor = cellProp.backgroundColor;
+    
+    // changing the boldprop button 
+    bgColorProp.value = cellProp.backgroundColor;
 })
 
 
 // changing values based on cell clicked
-let allCell = document.querySelectorAll(".cell")
+let allCell = document.querySelectorAll(".cell");
 allCell.forEach((cell) => {
-    setUI(cell)
-})
-function setUI (cell) {
     cell.addEventListener("click", (e) => {
         let address = addressDisplay.value;
         let [rowIdx, colIdx] = decodeAddress(address);
@@ -133,13 +218,14 @@ function setUI (cell) {
         underlineProp.style.backgroundColor = (cellProp.underline ? activeColor : inActiveColor);
         fontSizeProp.value = cellProp.fontSize
         fontFamilyProp.value = cellProp.fontFamily;
+        fontColorProp.value = cellProp.fontColor;
+        bgColorProp.value = cellProp.backgroundColor;
+        alignCenterProp.style.backgroundColor = (cellProp.alignment === "center" ? activeColor : inActiveColor);
+        alignLeftProp.style.backgroundColor = (cellProp.alignment === "left" ? activeColor : inActiveColor);
+        alignRightProp.style.backgroundColor = (cellProp.alignment === "right" ? activeColor : inActiveColor);
     
     })
-}
- 
-
-
-
+})
 
 // address decode function
 function decodeAddress(address) {
