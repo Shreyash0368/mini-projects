@@ -13,7 +13,10 @@ for (let i = 0; i < row; i++) {
             fontSize : 16,
             fontColor : "#000000",
             backgroundColor : "#ececec",
-            alignment : "left"
+            alignment : "left",
+            value : "",
+            formula : "",
+            children : [],
         }
         cellRow.push(cellObj);        
     }
@@ -37,11 +40,11 @@ let inActiveColor = "#ececec";
 let activeColor = "#dbd8e3" 
 
 
+// ! all property eventlistners start here
+
 fontSizeProp.addEventListener("change", (e) => {
     let address = addressDisplay.value;
-    let [rowIdx, colIdx] = decodeAddress(address);
-    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"] `)
-    let cellProp = sheetDB[rowIdx][colIdx];
+    let [cell, cellProp] = findCell(address); 
     
     // changing the data in sheet 
     cellProp.fontSize = fontSizeProp.value;
@@ -55,9 +58,7 @@ fontSizeProp.addEventListener("change", (e) => {
 
 fontFamilyProp.addEventListener("change", (e) => {
     let address = addressDisplay.value;
-    let [rowIdx, colIdx] = decodeAddress(address);
-    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"]`);
-    let cellProp = sheetDB[rowIdx][colIdx];
+    let [cell, cellProp] = findCell(address); 
     
     // changing the data in sheet 
     cellProp.fontFamily = fontFamilyProp.value;
@@ -71,9 +72,7 @@ fontFamilyProp.addEventListener("change", (e) => {
 
 boldProp.addEventListener("click", (e) => {
     let address = addressDisplay.value;
-    let [rowIdx, colIdx] = decodeAddress(address);
-    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"] `)
-    let cellProp = sheetDB[rowIdx][colIdx];
+    let [cell, cellProp] = findCell(address); 
     
     // changing the data in sheet 
     cellProp.bold = !cellProp.bold
@@ -87,9 +86,7 @@ boldProp.addEventListener("click", (e) => {
 
 italicProp.addEventListener("click", (e) => {
     let address = addressDisplay.value;
-    let [rowIdx, colIdx] = decodeAddress(address);
-    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"] `)
-    let cellProp = sheetDB[rowIdx][colIdx];
+    let [cell, cellProp] = findCell(address); 
     
     // changing the data in sheet 
     cellProp.italic = !cellProp.italic
@@ -103,9 +100,7 @@ italicProp.addEventListener("click", (e) => {
 
 underlineProp.addEventListener("click", (e) => {
     let address = addressDisplay.value;
-    let [rowIdx, colIdx] = decodeAddress(address);
-    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"] `)
-    let cellProp = sheetDB[rowIdx][colIdx];
+    let [cell, cellProp] = findCell(address); 
     
     // changing the data in sheet 
     cellProp.underline = !cellProp.underline
@@ -119,9 +114,7 @@ underlineProp.addEventListener("click", (e) => {
 
 alignLeftProp.addEventListener("click", (e) => {
     let address = addressDisplay.value;
-    let [rowIdx, colIdx] = decodeAddress(address);
-    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"] `)
-    let cellProp = sheetDB[rowIdx][colIdx];
+    let [cell, cellProp] = findCell(address); 
     
     // changing the data in sheet 
     cellProp.alignment = "left";
@@ -137,9 +130,7 @@ alignLeftProp.addEventListener("click", (e) => {
 
 alignRightProp.addEventListener("click", (e) => {
     let address = addressDisplay.value;
-    let [rowIdx, colIdx] = decodeAddress(address);
-    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"] `)
-    let cellProp = sheetDB[rowIdx][colIdx];
+    let [cell, cellProp] = findCell(address); 
     
     // changing the data in sheet 
     cellProp.alignment = "right";
@@ -154,10 +145,8 @@ alignRightProp.addEventListener("click", (e) => {
 })
 
 alignCenterProp.addEventListener("click", (e) => {
-    let address = addressDisplay.value;
-    let [rowIdx, colIdx] = decodeAddress(address);
-    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"] `)
-    let cellProp = sheetDB[rowIdx][colIdx];
+    let address = addressDisplay.value;    
+    let [cell, cellProp] = findCell(address); 
     
     // changing the data in sheet 
     cellProp.alignment = "center";
@@ -174,9 +163,7 @@ alignCenterProp.addEventListener("click", (e) => {
 
 fontColorProp.addEventListener("change", (e) => {
     let address = addressDisplay.value;
-    let [rowIdx, colIdx] = decodeAddress(address);
-    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"]`);
-    let cellProp = sheetDB[rowIdx][colIdx];
+    let [cell, cellProp] = findCell(address); 
     
     // changing the data in sheet 
     cellProp.fontColor = fontColorProp.value;
@@ -190,9 +177,7 @@ fontColorProp.addEventListener("change", (e) => {
 
 bgColorProp.addEventListener("change", (e) => {
     let address = addressDisplay.value;
-    let [rowIdx, colIdx] = decodeAddress(address);
-    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"]`);
-    let cellProp = sheetDB[rowIdx][colIdx];
+    let [cell, cellProp] = findCell(address); 
     
     // changing the data in sheet 
     cellProp.backgroundColor = bgColorProp.value;
@@ -204,8 +189,10 @@ bgColorProp.addEventListener("change", (e) => {
     bgColorProp.value = cellProp.backgroundColor;
 })
 
+// ! all property eventlistners start here
 
-// changing values based on cell clicked
+
+// ? changing values based on cell clicked
 let allCell = document.querySelectorAll(".cell");
 allCell.forEach((cell) => {
     cell.addEventListener("click", (e) => {
@@ -227,11 +214,20 @@ allCell.forEach((cell) => {
     })
 })
 
-// address decode function
+// ? address decode function
 function decodeAddress(address) {
     let colID = address.split("")[0];
     colID = colID.charCodeAt(0) - 65;
     let rowID = Number(address.split("")[1]);
 
     return [rowID - 1, colID];
+}
+
+// ? function to get the required cell in UI and object of same from DB
+function findCell (address) {
+    let [rowIdx, colIdx] = decodeAddress(address);
+    let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"]`);
+    let cellProp = sheetDB[rowIdx][colIdx];
+
+    return [cell, cellProp];
 }
