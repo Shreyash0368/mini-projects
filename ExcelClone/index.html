@@ -71,12 +71,18 @@
             <span class="material-icons align-center">
                 format_align_center
             </span>
-            <span class="material-icons text-color">
-                format_color_text
-            </span>
-            <span class="material-icons bg-color">
-                format_color_fill
-            </span>
+            <div class="color-option">
+                <span class="material-icons text-color">
+                    format_color_text
+                </span>
+                <input type="color" class="text-color">
+            </div>
+            <div class="color-option">
+                <span class="material-icons bg-color">
+                    format_color_fill
+                </span>
+                <input type="color" class="bg-color">
+            </div>
         </div>
 
         <div class="formula-bar">
@@ -108,8 +114,9 @@
         </div>
     </div>
 
-    <script src="./script.js"></script>
+    <script src="./CellContainer.js"></script>
     <script src="./cell-property.js"></script>
+    <script src="./formulaBar.js"></script>
 </body>
 
 </html>
