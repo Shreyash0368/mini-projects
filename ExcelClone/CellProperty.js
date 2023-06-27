@@ -210,7 +210,7 @@ allCell.forEach((cell) => {
         alignCenterProp.style.backgroundColor = (cellProp.alignment === "center" ? activeColor : inActiveColor);
         alignLeftProp.style.backgroundColor = (cellProp.alignment === "left" ? activeColor : inActiveColor);
         alignRightProp.style.backgroundColor = (cellProp.alignment === "right" ? activeColor : inActiveColor);
-    
+        formulaBar.value = cellProp.formula;    
     })
 })
 
