@@ -1,27 +1,30 @@
 //  creating the array for cell data
+let allSheetsDB = [];
 let sheetDB = [];
 
-for (let i = 0; i < row; i++) {
-    let cellRow = [];
-    for (let i = 0; i < col; i++) {
-        // default values of all cells
-        let cellObj = {
-            bold : false,
-            italic : false,
-            underline : false,
-            fontFamily : "Sans-serif",
-            fontSize : 16,
-            fontColor : "#000000",
-            backgroundColor : "#ececec",
-            alignment : "left",
-            value : "",
-            formula : "",
-            children : [],
-        }
-        cellRow.push(cellObj);        
-    }
-    sheetDB.push(cellRow);
-}
+// for (let i = 0; i < row; i++) {
+//     let cellRow = [];
+//     for (let i = 0; i < col; i++) {
+//         // default values of all cells
+//         let cellObj = {
+//             bold : false,
+//             italic : false,
+//             underline : false,
+//             fontFamily : "Sans-serif",
+//             fontSize : 16,
+//             fontColor : "#000000",
+//             backgroundColor : "#ececec",
+//             alignment : "left",
+//             value : "",
+//             formula : "",
+//             children : [],
+//         }
+//         cellRow.push(cellObj);        
+//     }
+//     sheetDB.push(cellRow);
+// }
+
+// allSheetsDB.push(sheetDB);
 
 //  query selector for all the different cell properties
 let fontFamilyProp = document.getElementById("font-family");
@@ -50,7 +53,9 @@ fontSizeProp.addEventListener("change", (e) => {
     cellProp.fontSize = fontSizeProp.value;
 
     // modifying text in cell
-    cell.style.fontSize = cellProp.fontSize + "px";
+    // cell.style.fontSize = cellProp.fontSize + "px";
+    cell.style.removeProperty('font-size');
+    cell.style.setProperty('font-size', cellProp.fontSize + "px");
     
     // changing the select value in UI 
     fontSizeProp.value = cellProp.fontSize
@@ -65,6 +70,9 @@ fontFamilyProp.addEventListener("change", (e) => {
 
     // modifying text in cell
     cell.style.fontFamily = cellProp.fontFamily;
+    cell.style.removeProperty('font-family');
+    cell.style.setProperty('font-family', cellProp.fontFamily);
+    
     
     // changing the boldprop button 
     fontFamilyProp.value = cellProp.fontFamily;
@@ -78,6 +86,7 @@ boldProp.addEventListener("click", (e) => {
     cellProp.bold = !cellProp.bold
 
     // modifying text in cell
+    cell.style.removeProperty("font-weight");
     cell.style.fontWeight = (cellProp.bold ? "bold" : "normal");
     
     // changing the boldprop button 
@@ -169,7 +178,9 @@ fontColorProp.addEventListener("change", (e) => {
     cellProp.fontColor = fontColorProp.value;
 
     // modifying text in cell
-    cell.style.color = cellProp.fontColor;
+    cell.style.removeProperty('color');
+    cell.style.setProperty('color', cellProp.fontColor);
+    
     
     // changing the boldprop button 
     fontColorProp.value = cellProp.fontColor;
@@ -183,7 +194,9 @@ bgColorProp.addEventListener("change", (e) => {
     cellProp.backgroundColor = bgColorProp.value;
 
     // modifying text in cell
-    cell.style.backgroundColor = cellProp.backgroundColor;
+    cell.style.removeProperty('background-color');
+    cell.style.setProperty('background-color', cellProp.backgroundColor);
+    // cell.style.set = cellProp.backgroundColor;
     
     // changing the boldprop button 
     bgColorProp.value = cellProp.backgroundColor;
@@ -201,24 +214,48 @@ allCell.forEach((cell) => {
         let cellProp = sheetDB[rowIdx][colIdx];
         
         boldProp.style.backgroundColor = (cellProp.bold ? activeColor : inActiveColor);
+        (cellProp.bold === false ? cell.style.removeProperty('font-weight') : cell.style.setProperty('font-weight', 'bold'));
+
         italicProp.style.backgroundColor = (cellProp.italic ? activeColor : inActiveColor);
+        (cellProp.italic === false ? cell.style.removeProperty('font-style') : cell.style.setProperty('font-style', 'italic'));
+        
         underlineProp.style.backgroundColor = (cellProp.underline ? activeColor : inActiveColor);
+        (cellProp.underline === false ? cell.style.removeProperty('text-decoration') : cell.style.setProperty('text-decoration', 'underline'));
+        
+        cell.style.removeProperty('font-size');
         fontSizeProp.value = cellProp.fontSize
+        // console.log(typeof fontSizeProp.value);
+        cell.style.setProperty('font-size', fontSizeProp.value + "px");
+        
+        cell.style.removeProperty('font-family');
         fontFamilyProp.value = cellProp.fontFamily;
+        cell.style.setProperty('font-family', fontFamilyProp.value);
+
+        cell.style.removeProperty('color');
         fontColorProp.value = cellProp.fontColor;
+        cell.style.setProperty('color', cellProp.fontColor);
+
+        cell.style.removeProperty('background-color');
         bgColorProp.value = cellProp.backgroundColor;
+        cell.style.setProperty('background-color', bgColorProp.value);
+
         alignCenterProp.style.backgroundColor = (cellProp.alignment === "center" ? activeColor : inActiveColor);
+        if (cellProp.alignment === 'center') cell.style.setProperty('text-align', 'center');
         alignLeftProp.style.backgroundColor = (cellProp.alignment === "left" ? activeColor : inActiveColor);
+        if (cellProp.alignment === 'left') cell.style.setProperty('text-align', 'left');
         alignRightProp.style.backgroundColor = (cellProp.alignment === "right" ? activeColor : inActiveColor);
-        formulaBar.value = cellProp.formula;    
+        if (cellProp.alignment === 'right') cell.style.setProperty('text-align', 'right');
+       
+        formulaBar.value = cellProp.formula; 
+        cell.innerText = cellProp.value;   
     })
 })
 
 // ? address decode function
-function decodeAddress(address) {
+function decodeAddress(address) {   
     let colID = address.split("")[0];
     colID = colID.charCodeAt(0) - 65;
-    let rowID = Number(address.split("")[1]);
+    let rowID = Number(address.substring(1));
 
     return [rowID - 1, colID];
 }
