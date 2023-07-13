@@ -1,12 +1,14 @@
+let allGrapghRelationsDB = [];
 let parentChildGraph = [];
-for (let i = 0; i < row; i++) {  // creating 2D array to store the children of all cells in graph form
-    let rowArr = []
-    for (let j = 0; j < col; j++) {
-        rowArr.push([])
-    }
-    parentChildGraph.push(rowArr);
-}
+// for (let i = 0; i < row; i++) {  // creating 2D array to store the children of all cells in graph form
+//     let rowArr = []
+//     for (let j = 0; j < col; j++) {
+//         rowArr.push([])
+//     }
+//     parentChildGraph.push(rowArr);
+// }
 
+// allGrapghRelationsDB.push(parentChildGraph);
 
 function isGraphCyclic(parentChildGraph) {
     // creating 2D auxilary arrays for the detecting cycle
