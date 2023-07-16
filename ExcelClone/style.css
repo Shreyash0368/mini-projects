@@ -56,13 +56,15 @@
     position: relative;
 }
 
-input.text-color, input.bg-color {
+input.text-color,
+input.bg-color {
     position: absolute;
     top: 0;
-    left: 0;;
+    left: 0;
+    ;
     opacity: 0;
     width: 100%;
-    height: 100%;    
+    height: 100%;
 }
 
 
@@ -106,7 +108,7 @@ input.text-color, input.bg-color {
 
 /* Grid container */
 .content-container {
-    height: calc(100vh - 9rem);
+    height: calc(100vh - 9.5rem);
     position: relative;
     overflow: scroll;
     background-color: #ececec;
@@ -169,32 +171,53 @@ input.text-color, input.bg-color {
     height: 2rem;
     width: 5rem;
     border: 1px solid #dbd8e3;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
+.selected-cell {
+    border: 3px solid teal;
 }
 
 /* sheet tab */
 .sheets-bar {
-    height: 2rem;
+    height: 2.5rem;
     background-color: #e3e3e3;
     display: flex;
     align-items: center;
     padding-left: 1.2rem;
 }
 
+.sheet-add:hover {
+    cursor: default;
+}
+
 .sheet-folder {
     width: calc(100vw - 5rem);
-    height: 70%;
+    height: 2.5rem;
     background-color: #e3e3e3;
     margin-left: 0.7rem;
     display: flex;
     align-items: center;
     padding-bottom: 4px;
+    overflow: auto;
 }
 
-.sheet-folder>div {
-    margin-left: 5px;
-    font-weight: bold;
+.sheet-cont {
+    height: 1.5rem;
+    width: 4.5rem;
+
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+
+    border-radius: 2px;
+
     text-decoration: underline;
-    text-decoration-thickness: 2px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    white-space: nowrap;
 }

@@ -78,7 +78,7 @@ function setSheetUI(sheet) {
 
         }
 
-        sheet.style.backgroundColor = "#dbd8e3"
+        sheet.style.backgroundColor = "#b7b7b7"
         let sheetIdx = sheet.getAttribute("id");
 
         sheetDB = allSheetsDB[sheetIdx];
@@ -91,6 +91,7 @@ function updateCells() {
     for (let rowIdx = 0; rowIdx < row; rowIdx++) {
         for (let colIdx = 0; colIdx < col; colIdx++) {
             let cell = document.querySelector(`.cell[row-id = "${rowIdx}"][col-id = "${colIdx}"]`);
+            cell.classList.remove('selected-cell');
             cell.click();
         }
     }
