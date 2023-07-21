@@ -17,6 +17,11 @@ let mins = 0;
 let sec = 0;
 let interval;
 
+// filter vars
+let allFilters = document.querySelectorAll(".filter");
+let filterColor = "rgba(0, 0, 0, 0)";
+let filterDisplay = document.querySelector(".filter-display");
+
 (async () => {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
@@ -38,8 +43,9 @@ let interval;
             let url = URL.createObjectURL(blob);
 
             const a = document.createElement("a");
+            const fileName = prompt("Enter the file name:");
             a.href = url;
-            a.download = "video-stream.mp4";
+            a.download = `${fileName}.mp4`;
             a.click();
 
             setTimeout(() => {
@@ -57,7 +63,7 @@ recordCont.addEventListener("click", (e) => {
 
     recordFlag = !recordFlag;
 
-    if (recordFlag) {        
+    if (recordFlag) {
         recordButton.classList.add("record-animation");
         recorder.start();
         startTimer();
@@ -76,6 +82,23 @@ captureCont.addEventListener("click", (e) => {
     setTimeout(function () {
         captureButton.classList.remove("capture-animation");
     }, 1100);
+
+    let canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    context.fillStyle =filterColor;    
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+
+    const url = canvas.toDataURL('image/jpg');
+    const fileName = prompt("Enter the file name:");
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${fileName}`;
+    a.click();
 })
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -119,3 +142,11 @@ function stopTimer() {
     timer.style.display = 'none';
 }
 
+// applying filters to the images
+allFilters.forEach((filter) => {
+    filter.addEventListener("click", (e) => {
+        filterColor = getComputedStyle(filter).backgroundColor;
+        console.log(filterColor);
+        filterDisplay.style.backgroundColor = filterColor
+    })
+})

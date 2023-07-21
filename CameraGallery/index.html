@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <title>Camera Gallery</title>
 </head>
+
 <body>
     <div class="video-cont">
         <video autoplay controls src="" class="camera-display"></video>
@@ -19,8 +22,27 @@
         </div>
     </div>
     <div class="record-timer">00:00:00</div>
-    
+    <div class="filter-cont">
+        <div class="filter brown"></div>
+        <div class="filter pink"></div>
+        <div class="filter green"></div>
+        <div class="filter transparent"></div>
+    </div>
+    <div class="filter-display"></div>
+    <div class="gallery-link">
+        <span class="material-icons">
+            collections
+        </span>
+    </div>
 
+    <script src="./db-perations.js"></script>
     <script src="./script.js"></script>
+    <script>
+        let gallery = document.querySelector(".gallery-link");
+        gallery.addEventListener("click", (e) => {
+            location.href="./gallery.html"; 
+        })
+    </script>
 </body>
+
 </html>
