@@ -40,17 +40,16 @@ let filterDisplay = document.querySelector(".filter-display");
 
         recorder.onstop = () => {
             let blob = new Blob(recordedChunks, { type: "video/mp4" });
-            let url = URL.createObjectURL(blob);
-
-            const a = document.createElement("a");
             const fileName = prompt("Enter the file name:");
-            a.href = url;
-            a.download = `${fileName}.mp4`;
-            a.click();
-
-            setTimeout(() => {
-                URL.revokeObjectURL(url);
-            }, 1000);
+            
+            if (db) {
+                const transaction = db.transaction(["video"], 'readwrite');
+                const videoStore = transaction.objectStore("video");
+                
+                let id = crypto.randomUUID().substring(1, 6);
+                videoStore.put({id: `${id}`, name: fileName, fileBlob: blob});                
+            }           
+            
         }
 
     } catch (error) {
@@ -92,13 +91,17 @@ captureCont.addEventListener("click", (e) => {
     context.fillStyle =filterColor;    
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-
-    const url = canvas.toDataURL('image/jpg');
     const fileName = prompt("Enter the file name:");
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${fileName}`;
-    a.click();
+
+    canvas.toBlob((blob) => {
+        if (db) {
+            const transaction = db.transaction(["image"], 'readwrite');
+            const imageStore = transaction.objectStore("image");
+
+            let id = crypto.randomUUID().substring(1, 6);
+            imageStore.put({id: `${id}`, name: fileName, fileBlob: blob});                
+        }
+    });    
 })
 
 document.addEventListener('DOMContentLoaded', function () {
