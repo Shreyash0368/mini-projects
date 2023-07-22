@@ -1,6 +1,7 @@
 body {
     padding: 0;
     margin: 0;
+    overflow: hidden;
 }
 
 /* Video display */
@@ -13,8 +14,8 @@ body {
 }
 
 .camera-display {
-    height: 100%;
-    width: 80%;
+    height: 100vh;
+    width: 70vw;
 }
 
 /* action buttons */
@@ -29,9 +30,10 @@ body {
     flex-flow: column;
     justify-content: space-between;
     align-items: center;
+    z-index: 2;
 }
 
-.action-buttons > * {
+.action-buttons>* {
     width: 4rem;
     height: 4rem;
     border: 4px solid white;
@@ -39,6 +41,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.action-buttons>*:hover {
+    cursor: pointer;
 }
 
 .record-button {
@@ -57,6 +63,59 @@ body {
     border-radius: 50%;
 }
 
+/* Color Filters for image */
+.filter-cont {
+    height: 24rem;
+    width: 10rem;
+
+    position: absolute;
+    top: calc((100vh - 24rem) / 2);
+    left: 3vw;
+
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;
+
+    z-index: 2;
+}
+
+.filter {
+    height: 25%;
+    width: 10rem;
+
+    border: 1px solid whitesmoke;
+    background: url("https://picsum.photos/seed/picsum/300/200");
+    background-size: 100% 100%;
+    background-blend-mode: color-burn;
+}
+
+.brown {
+    background-color: #84620684;
+}
+
+.pink {
+    background-color: #bf0eaa6b;
+}
+
+.green {
+    background-color: #3a993f69;
+}
+
+.transparent {
+    background-color: transparent;
+}
+
+.filter-display {
+    height: 100vh;
+    width: 70vw;
+
+    position: absolute;
+    top: 0;
+    left: calc((100vw - 70vw) / 2) ;
+
+    z-index: 1;
+}
 /* recording and capturing animations */
 
 .record-animation {
@@ -64,14 +123,14 @@ body {
 }
 
 .capture-animation {
-    animation: capture-animation 0.5s 1; 
+    animation: capture-animation 0.5s 1;
 }
 
 @keyframes record-animation {
     0% {
         transform: scale(1.0);
     }
-    
+
     50% {
         transform: scale(1.1);
     }
@@ -80,11 +139,12 @@ body {
         transform: scale(1.0);
     }
 }
-@keyframes capture-animation  {
+
+@keyframes capture-animation {
     0% {
         transform: scale(1.0);
     }
-    
+
     50% {
         transform: scale(1.1);
     }
@@ -100,7 +160,7 @@ body {
     height: 3rem;
     border: 3px solid white;
     border-radius: 10px;
-    
+
     position: absolute;
     top: 20vh;
     right: 1vw;
@@ -113,3 +173,18 @@ body {
     font-size: 1.5rem;
 }
 
+/* gallery button */
+.gallery-link{
+    position: absolute;
+    color: white;
+    top: calc(50vh + 10rem);
+    right: calc(4vw - 6px);   
+}
+
+.gallery-link > * {
+    font-size: 4rem;
+}
+
+.gallery-link:hover {
+    cursor: pointer;
+}
