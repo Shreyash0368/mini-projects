@@ -1,0 +1,111 @@
+* {
+    margin: 0px;
+}
+
+/* tool-box */
+.tool-box-dropdown {
+    height: 50px;
+    width: 50px;
+
+    border-radius: 50%;
+
+    position: absolute;
+    top: 3vh;
+    left: 2vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: whitesmoke;
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.3),
+        /* Outer shadow with increased blur radius */
+        inset 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Inner shadow with increased blur radius */
+}
+
+.tool-box-dropdown>* {
+    font-size: 2rem;
+}
+
+.tool-box {
+    height: 70px;
+    width: 50rem;
+
+    position: absolute;
+    top: 2vh;
+    left: calc((100vw - 50rem) / 2);
+
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.3),
+        /* Outer shadow with increased blur radius */
+        inset 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Inner shadow with increased blur radius */
+
+    background-color: #dff9fb;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.tool-box>* {
+    width: 3rem;
+    height: 3rem;
+    
+    font-size: 2rem;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 10px;
+}
+
+.in-use {
+    background-color: #00cec9;
+}
+
+/* Pencil edit options */
+
+.draw-button {
+    position: relative;
+    border: 2px solid black;
+}
+
+.pencil-edit-options {
+    height: 5rem;
+    width: 7rem;
+
+    position: absolute;
+    top: 68px;
+    left: 0;
+
+    display: flex;
+    flex-direction: column;   
+    justify-content: space-around; 
+    align-items: center;
+
+    background-color: #dff9fb;
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.3),
+        /* Outer shadow with increased blur radius */
+        inset 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Inner shadow with increased blur radius */    
+}
+
+#pencil-color {    
+    height: 50%;
+    width: 70%;    
+}
+
+#pencil-thickness {    
+    width: 100%;
+}
+
+/* Canvas Drawing Page */
+.drawing-page {
+    height: 100vh;
+    width: 100vw;
+}

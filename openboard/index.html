@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="./style.css">
+    <title>Open Board</title>
+</head>
+
+<body>
+    <!-- Tool Box Segment -->
+    <div class="tool-box-dropdown">
+        <span class="material-icons">
+            menu
+        </span>
+    </div>
+    <div class="tool-box">
+        <i class="fa-solid fa-pencil"></i>
+        <div class="pencil-edit-options">
+            <input type="color" name="pencil-color" id="pencil-color">
+            <input type="range" name="pencil-thickness" id="pencil-thickness">
+        </div>
+        <i class="fa-solid fa-eraser"></i>
+        <span class="material-icons">
+            download
+        </span>
+        <span class="material-icons">
+            file_upload
+        </span>
+        <span class="material-icons">
+            description
+        </span>
+        <span class="material-icons">
+            undo
+        </span>
+        <span class="material-icons">
+            redo
+        </span>
+    </div>
+
+    <!-- Canvas Section -->
+    <canvas class="drawing-page"></canvas>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
