@@ -45,7 +45,7 @@
 
     background-color: #dff9fb;
 
-    display: flex;
+    display: none;
     justify-content: space-around;
     align-items: center;
 }
@@ -68,31 +68,29 @@
 }
 
 /* Pencil edit options */
-
 .draw-button {
     position: relative;
     border: 2px solid black;
 }
 
-.pencil-edit-options {
+.pencil-edit {
     height: 5rem;
     width: 7rem;
 
     position: absolute;
-    top: 68px;
+    top: 4.2rem;
     left: 0;
 
-    display: flex;
+    display: none;
     flex-direction: column;   
     justify-content: space-around; 
     align-items: center;
 
     background-color: #dff9fb;
     box-shadow:
-        0 4px 10px rgba(0, 0, 0, 0.3),
-        /* Outer shadow with increased blur radius */
-        inset 0 4px 10px rgba(0, 0, 0, 0.2);
-    /* Inner shadow with increased blur radius */    
+    0 0 10px rgba(0, 0, 0, 0.3), /* Outer shadow with increased blur radius */
+    inset 0 0 10px rgba(0, 0, 0, 0.2); /* Inner shadow */
+    
 }
 
 #pencil-color {    
@@ -100,12 +98,52 @@
     width: 70%;    
 }
 
-#pencil-thickness {    
-    width: 100%;
+#pencil-width {    
+    width: 80%;
+}
+
+/* Eraser edit */
+.eraser-edit {
+    height: 3rem;
+    width: 7rem;
+
+    position: absolute;
+    top: 4.25rem;
+    left: 7rem;
+
+    display: none;
+
+    background-color: #dff9fb;
+    box-shadow:
+    0 0 10px rgba(0, 0, 0, 0.3), /* Outer shadow with increased blur radius */
+    inset 0 0 10px rgba(0, 0, 0, 0.2); /* Inner shadow */   
+}
+
+.eraser-edit > * {
+    width: 80%;
 }
 
 /* Canvas Drawing Page */
 .drawing-page {
     height: 100vh;
     width: 100vw;
+}
+
+/* Sticky Note */
+.sticky-note {
+    height: 20rem;
+    width: 15rem;
+
+    background-color: lightblue;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.header {
+    height: 20%;
+    width: 100%;
+
+    background-color: lightcoral;
 }
