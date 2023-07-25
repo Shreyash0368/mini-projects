@@ -1,47 +1,94 @@
 const canvas = document.querySelector(".drawing-page");
 const ctx = canvas.getContext('2d');
-const drawButton = document.querySelector(".fa-pencil");
+
+const toolDropdown = document.querySelector(".tool-box-dropdown");
+const toolBox = document.querySelector(".tool-box");
+let toolBoxFlag = false;
+
+const pencil = document.querySelector(".fa-pencil");
+const pencilEditPanel = document.querySelector(".pencil-edit");
+const pencilColorInput = document.getElementById("pencil-color");
+const pencilWidthInput = document.getElementById("pencil-width");
+
+const eraser = document.querySelector(".fa-eraser");
+const eraserEditPanel = document.querySelector(".eraser-edit");
+const eraserWidthInput = document.getElementById("eraser-width");
 
 let isDrawing = false;
-let drawButtonFlag = false;
+let pencilFlag = false;
+let eraserFlag = false;
+
 let lastX = 0;
 let lastY = 0;
+
+let pencilWidth = 2;
+let pencilColor = 'black';
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-window.onresize = handleResize();
+// dropdown for toolbox display
+toolDropdown.onclick = (e) => {
+    toolBoxFlag = !toolBoxFlag
+    if (toolBoxFlag) {
+        toolBox.style.display = 'flex';
+    }
+    else {
+        toolBox.style.display = 'none';
+    }
+}
 
-drawButton.onclick = (e) => {
-    if (!drawButtonFlag) {
+// chnage canvas size with window
+window.onresize = handleResize;
+
+function handleResize() {
+    // Store the current canvas content
+    const offscreenCanvas = document.createElement("canvas");
+    const offscreenCtx = offscreenCanvas.getContext("2d");
+
+    offscreenCanvas.width = canvas.width;
+    offscreenCanvas.height = canvas.height;
+    offscreenCtx.drawImage(canvas, 0, 0);
+
+    // Resize the canvas to match the new window size
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Redraw the preserved contents back onto the resized canvas
+    ctx.drawImage(offscreenCanvas, 0, 0, offscreenCanvas.width, offscreenCanvas.height, 0, 0, canvas.width, canvas.height);
+}
+
+// pencil draw event listeners
+pencil.onclick = (e) => {
+    eraserFlag = false;
+    eraser.classList.remove("in-use");
+    eraserEditPanel.style.display = 'none';
+
+    pencilColor = 'black';
+    pencilWidth = 2;    
+
+    if (!pencilFlag) {
         canvas.addEventListener("mousedown", startDrawing);
         canvas.addEventListener("mousemove", draw);
         canvas.addEventListener("mouseup", stopDrawing);
-        drawButton.classList.add("in-use");
+        pencil.classList.add("in-use");
+        pencilEditPanel.style.display = 'flex';
+
     }
     else {
         canvas.removeEventListener("mousedown", startDrawing);
         canvas.removeEventListener("mousemove", draw);
         canvas.removeEventListener("mouseup", stopDrawing);
-        drawButton.classList.remove("in-use");
-        [lastX, lastY] = [0, 0];
+        pencil.classList.remove("in-use");
+        pencilEditPanel.style.display = 'none';
     }
 
-    console.log("draw button clicked", drawButtonFlag);
-
-    drawButtonFlag = !drawButtonFlag;
+    pencilFlag = !pencilFlag;
 }
 
-drawButton.addEventListener('mousedown', (event) => {
-    if (event.button === 2) { // Right mouse button
-        event.preventDefault(); // Prevent the default context menu from showing
-
-
-        console.log('Right-click event triggered!');
-    }
-});
-
-
+// changing pencil color and width
+pencilColorInput.onchange = changePencilColor;
+pencilWidthInput.onchange = changePencilWidth;
 
 function startDrawing(e) {
     // Adjust mouse event coordinates to the current canvas size
@@ -58,8 +105,8 @@ function draw(e) {
     let currentX = (e.clientX - rect.left) * (canvas.width / rect.width);
     let currentY = (e.clientY - rect.top) * (canvas.height / rect.height);
 
-    ctx.strokeStyle = 'black';
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = pencilColor;
+    ctx.lineWidth = Number(pencilWidth);
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
 
@@ -75,20 +122,44 @@ function stopDrawing() {
     isDrawing = false;
 }
 
-function handleResize() {
-    // Store the current canvas content
-    const offscreenCanvas = document.createElement("canvas");
-    const offscreenCtx = offscreenCanvas.getContext("2d");
-    const ctx = canvas.getContext('2d');
-    ctx.lineWidth = 2;
-    offscreenCanvas.width = canvas.width;
-    offscreenCanvas.height = canvas.height;
-    offscreenCtx.drawImage(canvas, 0, 0);
-
-    // Resize the canvas to match the new window size
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    // Redraw the preserved contents back onto the resized canvas
-    ctx.drawImage(offscreenCanvas, 0, 0, offscreenCanvas.width, offscreenCanvas.height, 0, 0, canvas.width, canvas.height);
+function changePencilColor(e) {
+    pencilColor = pencilColorInput.value;
 }
+
+function changePencilWidth(e) {
+    pencilWidth = Math.round(pencilWidthInput.valueAsNumber / 10);
+}
+
+// Eraser Implementation
+eraser.onclick = (e) => {
+    pencilFlag = false;
+    pencil.classList.remove("in-use");
+    pencilEditPanel.style.display = 'none';
+
+
+    pencilColor = 'white';
+    pencilWidth = 5;
+
+    if (!eraserFlag) {
+        canvas.addEventListener("mousedown", startDrawing);
+        canvas.addEventListener("mousemove", draw);
+        canvas.addEventListener("mouseup", stopDrawing);
+        eraser.classList.add("in-use");
+        eraserEditPanel.style.display = 'flex';
+
+    }
+    else {
+        canvas.removeEventListener("mousedown", startDrawing);
+        canvas.removeEventListener("mousemove", draw);
+        canvas.removeEventListener("mouseup", stopDrawing);
+        eraser.classList.remove("in-use");
+        eraserEditPanel.style.display = 'none';
+    }
+
+    eraserFlag = !eraserFlag;
+}
+
+eraserWidthInput.onchange = (e) => {
+    pencilWidth = Math.round(eraserWidthInput.valueAsNumber / 2);
+}
+

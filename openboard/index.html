@@ -13,19 +13,26 @@
 </head>
 
 <body>
-    <!-- Tool Box Segment -->
+    <!-- Tool Dropdown button -->
     <div class="tool-box-dropdown">
         <span class="material-icons">
             menu
         </span>
     </div>
+
+    <!-- Tool box -->
     <div class="tool-box">
         <i class="fa-solid fa-pencil"></i>
-        <div class="pencil-edit-options">
-            <input type="color" name="pencil-color" id="pencil-color">
-            <input type="range" name="pencil-thickness" id="pencil-thickness">
+        <div class="pencil-edit">
+            <input type="color" value="#000000" name="pencil-color" id="pencil-color">
+            <input type="range" value="20" name="pencil-width" id="pencil-width">
         </div>
+        
         <i class="fa-solid fa-eraser"></i>
+        <div class="eraser-edit">
+            <input type="range" value="20" name="eraser-width" id="eraser-width">
+        </div>
+
         <span class="material-icons">
             download
         </span>
