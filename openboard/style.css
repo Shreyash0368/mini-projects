@@ -133,17 +133,52 @@
 .sticky-note {
     height: 20rem;
     width: 15rem;
-
-    background-color: lightblue;
+    
+    display: none;
 
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 10rem;
+    left: 5rem;
 }
 
 .header {
-    height: 20%;
+    height: 15%;
     width: 100%;
 
-    background-color: lightcoral;
+    background-color: #0984e3;
+    border-radius: 2px;
+}
+
+.button {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    position: absolute;
+}
+
+#minimize {
+    background-color: lightgreen; 
+    right: 4rem;
+    top: calc((15% - 2rem)/2);
+}
+
+#remove {
+    background-color: red;
+    right: 1rem;
+    top: calc((15% - 2rem)/2);
+}
+
+.content-area {
+    height: 85%;
+    width: 100%;
+
+    box-sizing: border-box;
+    padding: 5px 10px;
+    
+    background-color: #74b9ff;
+    border-radius: 2px;
+
+    outline: none;
+
+    font-size: large;
 }

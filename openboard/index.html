@@ -33,27 +33,38 @@
             <input type="range" value="20" name="eraser-width" id="eraser-width">
         </div>
 
-        <span class="material-icons">
+        <span class="material-icons" id="download">
             download
         </span>
-        <span class="material-icons">
+        <span class="material-icons" id="upload">
             file_upload
         </span>
-        <span class="material-icons">
+        <span class="material-icons" id="note">
             description
         </span>
-        <span class="material-icons">
+        <span class="material-icons" id="undo">
             undo
         </span>
-        <span class="material-icons">
+        <span class="material-icons" id="redo">
             redo
         </span>
     </div>
 
     <!-- Canvas Section -->
-    <canvas class="drawing-page"></canvas>
+    <canvas class="drawing-page" id="drawing-page"></canvas>
+
+    <!-- Sticky Notes -->
+    <div class="sticky-note">
+        <div class="header"></div>
+        <div class="button" id="minimize"></div>
+        <div class="button" id="remove"></div>
+        <div class="content-area" contenteditable="true" spellcheck="false"></div>
+    </div>
 
     <script src="./script.js"></script>
+    <script src="./note-handling.js"></script>
+    <script src="./upload-download.js"></script>
+    <input type="file" name="fileboi" id="fileboi">
 </body>
 
 </html>
