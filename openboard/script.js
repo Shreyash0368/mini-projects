@@ -1,5 +1,9 @@
-const canvas = document.querySelector(".drawing-page");
+const canvas = document.getElementById("drawing-page");
 const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+ctx.fillStyle = 'white';
+ctx.fillRect(0,0,canvas.width, canvas.height);
 
 const toolDropdown = document.querySelector(".tool-box-dropdown");
 const toolBox = document.querySelector(".tool-box");
@@ -23,9 +27,6 @@ let lastY = 0;
 
 let pencilWidth = 2;
 let pencilColor = 'black';
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
 
 // dropdown for toolbox display
 toolDropdown.onclick = (e) => {
