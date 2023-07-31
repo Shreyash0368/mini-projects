@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 ctx.fillStyle = 'white';
-ctx.fillRect(0,0,canvas.width, canvas.height);
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 const toolDropdown = document.querySelector(".tool-box-dropdown");
 const toolBox = document.querySelector(".tool-box");
@@ -66,7 +66,7 @@ pencil.onclick = (e) => {
     eraserEditPanel.style.display = 'none';
 
     pencilColor = 'black';
-    pencilWidth = 2;    
+    pencilWidth = 2;
 
     if (!pencilFlag) {
         canvas.addEventListener("mousedown", startDrawing);
@@ -87,16 +87,13 @@ pencil.onclick = (e) => {
     pencilFlag = !pencilFlag;
 }
 
-// changing pencil color and width
-pencilColorInput.onchange = changePencilColor;
-pencilWidthInput.onchange = changePencilWidth;
-
 function startDrawing(e) {
     // Adjust mouse event coordinates to the current canvas size
     const rect = canvas.getBoundingClientRect();
     lastX = (e.clientX - rect.left) * (canvas.width / rect.width);
     lastY = (e.clientY - rect.top) * (canvas.height / rect.height);
     isDrawing = true;
+    saveOldCnavas();
 }
 
 function draw(e) {
@@ -122,6 +119,10 @@ function draw(e) {
 function stopDrawing() {
     isDrawing = false;
 }
+
+// changing pencil color and width
+pencilColorInput.onchange = changePencilColor;
+pencilWidthInput.onchange = changePencilWidth;
 
 function changePencilColor(e) {
     pencilColor = pencilColorInput.value;
