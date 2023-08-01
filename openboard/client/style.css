@@ -182,3 +182,8 @@
 
     font-size: large;
 }
+
+/* upload button */
+#note-image {
+    display: none;
+}
