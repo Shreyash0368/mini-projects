@@ -25,12 +25,12 @@
         <i class="fa-solid fa-pencil"></i>
         <div class="pencil-edit">
             <input type="color" value="#000000" name="pencil-color" id="pencil-color">
-            <input type="range" value="20" name="pencil-width" id="pencil-width">
+            <input type="range" min="10" value="20" name="pencil-width" id="pencil-width">
         </div>
 
         <i class="fa-solid fa-eraser"></i>
         <div class="eraser-edit">
-            <input type="range" value="20" name="eraser-width" id="eraser-width">
+            <input type="range" min="10" value="20" name="eraser-width" id="eraser-width">
         </div>
 
         <span class="material-icons" id="download">
@@ -62,9 +62,9 @@
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
         integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
         crossorigin="anonymous"></script>
-    <!-- <script>
-        let socket = io.connect();
-    </script> -->
+    <script>
+        let socket = io.connect('http://localhost:3000');
+    </script>
     <script src="./undo-redo.js"></script>
     <script src="./canvas-handling.js"></script>
     <script src="./note-handling.js"></script>

@@ -1,23 +1,34 @@
 const undoBtn = document.getElementById("undo");
 const redobtn = document.getElementById("redo");
 
-let undoStack = [];
-let redoStack = [];
+let undoStackGolbal = [];
+let redoStackGlobal = [];
 
-undoBtn.onclick = undo;
-redobtn.onclick = redo;
+undoBtn.onclick = socket.emit.bind(socket, 'undo');
+redobtn.onclick = socket.emit.bind(socket, 'redo');
 
 function saveOldCnavas() {
-    undoStack.push(canvas.toDataURL());
-    redoStack = [];
+    undoStackGolbal.push(canvas.toDataURL());
+    redoStackGlobal = [];
+    socket.on('stackUpdate', [undoStackGolbal, redoStackGlobal]);
+    // updateGlobal([undoStackGolbal, redoStackGlobal]);
+}
+
+function updateGlobal([undoStack, redoStack]) {
+    undoStackGolbal = undoStack;
+    redoStackGlobal = redoStack;
+}
+
+function undoHandler(data) {
+    undo();
 }
 
 function undo() {
-    if (undoStack.length < 1) return;
+    if (undoStackGolbal.length < 1) return;
 
-    redoStack.push(canvas.toDataURL()); // pushing the current state into redo stack before changing to older one
+    redoStackGlobal.push(canvas.toDataURL()); // pushing the current state into redo stack before changing to older one
     let oldState = new Image();
-    oldState.src = undoStack.pop();
+    oldState.src = undoStackGolbal.pop();
     oldState.onload = (e) => {
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -27,11 +38,11 @@ function undo() {
 }
 
 function redo() {
-    if (redoStack.length < 1) return;
+    if (redoStackGlobal.length < 1) return;
 
-    undoStack.push(canvas.toDataURL());
+    undoStackGolbal.push(canvas.toDataURL());
     let newState = new Image();
-    newState.src = redoStack.pop();
+    newState.src = redoStackGlobal.pop();
     newState.onload = (e) => {
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -39,3 +50,16 @@ function redo() {
     }
 
 }
+
+// update stack using socket
+socket.on('stackUpdate', (data) => {
+    updateGlobal(data);
+})
+
+socket.on('undo', () => {
+    undo();
+})
+
+socket.on('redo', () => {
+    redo();
+})

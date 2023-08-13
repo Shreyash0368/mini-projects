@@ -22,9 +22,6 @@ let isDrawing = false;
 let pencilFlag = false;
 let eraserFlag = false;
 
-let pencilWidth = 2;
-let pencilColor = 'black';
-
 // dropdown for toolbox display
 toolDropdown.onclick = (e) => {
     toolBoxFlag = !toolBoxFlag
@@ -62,8 +59,8 @@ pencil.onclick = (e) => {
     eraser.classList.remove("in-use");
     eraserEditPanel.style.display = 'none';
 
-    pencilColor = 'black';
-    pencilWidth = 2;
+    changePencilColor('#000000');
+    changePencilWidth(2);
 
     if (!pencilFlag) {
         canvas.addEventListener("mousedown", mouseDownHandler);
@@ -76,7 +73,7 @@ pencil.onclick = (e) => {
     else {
         canvas.removeEventListener("mousedown", mouseDownHandler);
         canvas.removeEventListener("mousemove", mouseMoveHandler);
-        canvas.removeEventListener("mouseup", stopDrawing);
+        canvas.removeEventListener("mouseup", mouseUpHandler);
         pencil.classList.remove("in-use");
         pencilEditPanel.style.display = 'none';
     }
@@ -88,30 +85,32 @@ function mouseDownHandler(e) {
     const rect = canvas.getBoundingClientRect();
     let lastX = (e.clientX - rect.left) * (canvas.width / rect.width);
     let lastY = (e.clientY - rect.top) * (canvas.height / rect.height);
-    
-    
-    if (pencilFlag) {
-        pencilColor = pencilColorInput.value;        
-        pencilWidth = Math.round(pencilWidthInput.valueAsNumber / 10);
-    }
-    if (eraserFlag) {
-        pencilColor = 'white';
-        pencilWidth = Math.round(eraserWidthInput.valueAsNumber / 2);
-    }   
-
-    startDrawing([lastX, lastY]);
+    isDrawing = true; 
+    let startCoord = [lastX, lastY, isDrawing]; 
+    socket.emit('startDrawing', startCoord); 
 }
 
 function mouseMoveHandler(e) {
+    if (!isDrawing) return;
     // Adjust mouse event coordinates to the current canvas size
     const rect = canvas.getBoundingClientRect();
     let currentX = (e.clientX - rect.left) * (canvas.width / rect.width);
     let currentY = (e.clientY - rect.top) * (canvas.height / rect.height);
-    draw([currentX, currentY]);
+    let color = pencilColorInput.value;   
+    let width;     
+    if (pencilFlag) width = Math.round(pencilWidthInput.valueAsNumber / 10);    
+    if (eraserFlag) width = Math.round(eraserWidthInput.valueAsNumber / 4);
+    socket.emit('draw', [currentX, currentY, color, width, isDrawing]);
+    // draw([currentX, currentY, color, width]);
 
 }
 
-function startDrawing([x, y]) {
+function mouseUpHandler() {
+    socket.emit('stopDrawing');
+}
+
+function startDrawing([x, y, isDrawing]) {
+    if (!isDrawing) return;
     // Adjust mouse event coordinates to the current canvas size
     isDrawing = true;
     ctx.beginPath();
@@ -119,18 +118,19 @@ function startDrawing([x, y]) {
     saveOldCnavas();
 }
 
-function draw([x, y]) {
+function draw([x, y, color, width, isDrawing]) {
     if (!isDrawing) return;
-    
-    ctx.strokeStyle = pencilColor;
-    ctx.lineWidth = Number(pencilWidth);
+
+    ctx.strokeStyle = color;
+    ctx.lineWidth = Number(width);
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
-
     
     ctx.lineTo(x, y);
     ctx.stroke();    
 }
+
+
 
 function stopDrawing() {
     isDrawing = false;
@@ -140,24 +140,20 @@ function stopDrawing() {
 pencilColorInput.onchange = colorChangeHandler;
 pencilWidthInput.onchange = pencilWidthChangeHandler;
 
-function colorChangeHandler(e) {
-    let colorVal = pencilColorInput.value;
-    changePencilColor(colorVal);
+function colorChangeHandler(e) {    
+    changePencilColor(pencilColorInput.value);
 }
 
 function changePencilColor(colorVal) {
-    pencilColor = colorVal;
     pencilColorInput.value = colorVal;
 }
 
-function pencilWidthChangeHandler(e) {
-    let widthVal = Math.round(pencilWidthInput.valueAsNumber / 10);
-    changePencilWidth(widthVal);
+function pencilWidthChangeHandler(e) {    
+    changePencilWidth(Math.round(pencilWidthInput.valueAsNumber));
 }
 
 function changePencilWidth(widthVal) {
-    pencilWidth = widthVal;
-    pencilWidthInput.valueAsNumber = (widthVal * 10)
+    pencilWidthInput.valueAsNumber = (widthVal);
 }
 
 
@@ -168,8 +164,8 @@ eraser.onclick = (e) => {
     pencilEditPanel.style.display = 'none';
 
 
-    pencilColor = 'white';
-    pencilWidth = 5;
+    changePencilColor('#FFFFFF');
+    changeEraserWidth(10);
 
     if (!eraserFlag) {
         canvas.addEventListener("mousedown", mouseDownHandler);
@@ -190,12 +186,24 @@ eraser.onclick = (e) => {
     eraserFlag = !eraserFlag;
 }
 
-eraserWidthInput.onchange = (e) => {
-    changeEraserWidth(Math.round(eraserWidthInput.valueAsNumber / 2));
+eraserWidthInput.onchange = (e) => {       
+    changeEraserWidth(Math.round(eraserWidthInput.valueAsNumber));
 }
 
 function changeEraserWidth(widthVal) {
-    pencilWidth = widthVal;
-    eraserWidthInput.valueAsNumber = (widthVal * 2);
+    eraserWidthInput.valueAsNumber = widthVal;
 }
+
+// socket handling
+socket.on('startDrawing', (data) => {
+    startDrawing(data);
+})
+
+socket.on('draw', (data) => {
+    draw(data);
+})
+
+socket.on('stopDrawing', () => {
+    stopDrawing();
+})
 
